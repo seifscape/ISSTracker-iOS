@@ -47,7 +47,7 @@ class ViewController: UIViewController {
 
                     self.issLocationPath.append(currentLocation.issPosition.locationCoordinate())
 
-                    let annotation = ISSAnnotation(coordinate: (currentLocation.issPosition.locationCoordinate()), title: "ISS", subtitle: String(currentLocation.timestamp), locationImage: nil)
+                    let annotation = ISSAnnotation(coordinate: (currentLocation.issPosition.locationCoordinate()), title: "ISS", subtitle: String(currentLocation.timestamp))
 
                     self.geodesicPolyline = MKGeodesicPolyline(coordinates: self.issLocationPath, count: self.issLocationPath.count)
 

@@ -13,13 +13,11 @@ final class ISSAnnotation: NSObject, MKAnnotation {
     dynamic var coordinate: CLLocationCoordinate2D
     dynamic var title: String?
     dynamic var subtitle: String?
-    dynamic var image: UIImage?
 
-    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?, locationImage: UIImage?) {
+    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?) {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
-        self.image = locationImage
     }
 
     func setCoordinate(newCoordinate: CLLocationCoordinate2D) {
