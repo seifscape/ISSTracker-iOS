@@ -35,7 +35,6 @@ class ViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.apiTimer.invalidate()
     }
 
     func animateISS(completion: (() -> Void)?) {
