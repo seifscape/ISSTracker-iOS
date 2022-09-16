@@ -33,6 +33,11 @@ class ViewController: UIViewController {
         self.animateISS(completion: nil)
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.apiTimer.invalidate()
+    }
+
     func animateISS(completion: (() -> Void)?) {
         var firstLaunch = true
         self.apiTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: true, block: { [weak self] timer in
@@ -73,6 +78,15 @@ class ViewController: UIViewController {
                         }
                     }
                 }
+                if error != nil {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController.errorAlert(error: error!, onConfirmation: {
+                            timer.invalidate()
+                            completion?()
+                        })
+                        self.present(alert, animated: true)
+                    }
+                }
             }
         })
     }
@@ -88,6 +102,9 @@ class ViewController: UIViewController {
                         let serverResponse = try? JSONDecoder().decode(ISSNow.self, from: data)
                         onCompletionHandler(serverResponse, nil)
                     }
+                }
+                if error != nil {
+                    onCompletionHandler(nil, error)
                 }
             }
         }
@@ -141,7 +158,6 @@ extension ViewController: MKMapViewDelegate {
     }
 
     // MARK: MapKit Delegates
-
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         // Make sure we are rendering a polyline.
         guard let polyline = overlay as? MKPolyline else {
@@ -192,3 +208,12 @@ extension ViewController: MKMapViewDelegate {
 
 }
 
+
+extension UIAlertController {
+    static func errorAlert(error: Error, onConfirmation: @escaping () -> Void) -> UIAlertController {
+        let ok = UIAlertAction(title: "OK", style: .default) { _ in onConfirmation() }
+        let alert = UIAlertController(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(ok)
+        return alert
+    }
+}
