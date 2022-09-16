@@ -24,7 +24,6 @@ struct ISSNow: Codable {
 struct ISSPosition: Codable {
     let latitude, longitude: CLLocationDegrees
 
-    // https://stackoverflow.com/questions/44594652/swift-4-json-decodable-simplest-way-to-decode-type-change
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         guard let lng = try CLLocationDegrees(container.decode(String.self, forKey: .longitude)) else {
