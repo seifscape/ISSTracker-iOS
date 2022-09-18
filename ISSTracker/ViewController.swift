@@ -178,7 +178,7 @@ extension ViewController: MKMapViewDelegate {
           if annotation is MKUserLocation {
              return nil
           } else if annotation is ISSAnnotation {
-             annotationView.image =  UIImage(imageLiteralResourceName: "iss-icon")
+             annotationView.image =  UIImage(named: "iss-icon")
               annotationView.tintColor = .white
              return annotationView
           } else {
